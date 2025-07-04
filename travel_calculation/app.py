@@ -49,6 +49,6 @@ if calculate_trip_emissions:
 
     if res >= 500:
         suggestions_alternative = st.button('Suggest Alternatives')
-        st.image('images/sad_face.jpg')
+        st.image('../images/sad_face.jpg')
     else:
-        st.image('images/happy_face.jpg')
+        st.image('../images/happy_face.jpg')
