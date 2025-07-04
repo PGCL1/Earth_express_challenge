@@ -8,3 +8,6 @@ calculate past emissions per department<br>
 create function to calculate if emissions are on track or not based on current depart emissions (revolut idea - implementation design is your choice)<br>
 API climatiq get Emissions results (partially done)<br>
 create MVP for emissions calculator<br>
+
+# Frontend to try
+[Streamlit](https://streamlit.io/)
