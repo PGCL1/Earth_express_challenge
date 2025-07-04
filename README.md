@@ -11,3 +11,9 @@ create MVP for emissions calculator<br>
 
 # Frontend to try
 [Streamlit](https://streamlit.io/)
+
+pretty dope site tbh<br>
+1. create your python script<br>
+2. ```python
+streamlit run <python-script>
+```
