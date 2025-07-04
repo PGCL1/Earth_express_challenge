@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 import numpy as np
 import pandas as pd
-from travel_emissions import get_travel_emissions
-from test import random_number
+from travel_calculation.travel_emissions import get_travel_emissions
+from travel_calculation.test import random_number
 
 
 def hello():
@@ -49,6 +49,6 @@ if calculate_trip_emissions:
 
     if res >= 500:
         suggestions_alternative = st.button('Suggest Alternatives')
-        st.image('../images/sad_face.jpg')
+        st.image('images/sad_face.jpg')
     else:
-        st.image('../images/happy_face.jpg')
+        st.image('images/happy_face.jpg')
