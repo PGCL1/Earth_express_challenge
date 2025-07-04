@@ -13,7 +13,10 @@ create MVP for emissions calculator - G<br>
 [Streamlit](https://streamlit.io/)
 
 pretty dope site tbh<br>
-1. create your python script<br>
-2. ```python
-    streamlit run <python-script>
-    ```
+ ```python
+    python3 -m venv myenv
+    source myenv/bin/activate
+    pip install -r requirements.txt
+    streamlit run streamlit_app.py
+```
+enjoy!
