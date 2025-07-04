@@ -2,18 +2,27 @@ import streamlit as st
 import requests
 import numpy as np
 import pandas as pd
-import os
+from travel_emissions import get_travel_emissions
+
+
+def hello():
+    print("wazaaaa")
+
 
 header = st.write('Travel Emission Cockpit')
 
-origin = st.text_input('Enter Departure')
-destination = st.text_input('Enter Destination')
+col1, col2 = st.columns(2)
+
+with col1:
+    origin = st.text_input('Enter Departure')
+with col2:
+    destination = st.text_input('Enter Destination')
+
 travel_mode = st.selectbox(
         'How are you planning to travel?',
         ('air', 'car', 'rail')
 )
 flight_class = ""
-st.write(f"Customer will be travelling in {travel_mode}")
 
 if travel_mode == 'air':
     flight_class = st.selectbox(
@@ -22,32 +31,16 @@ if travel_mode == 'air':
     )
     st.write(f"Customer will be flying in {flight_class}")
 
-st.write(f"Departure Location: {origin}")
-st.write(f"Destination Location: {destination}")
+st.write(f"Customer will be travelling from {origin} to {destination} by {travel_mode}")
+calculate_trip_emissions = st.button("Calculate Emissions",
+                                     on_click=get_travel_emissions,
+                                     args=(origin, destination, travel_mode, flight_class))
 
+if calculate_trip_emissions:
+    st.write("Customer wants to know what are the total emissions for their trip")
+    res = get_travel_emissions(origin, destination, travel_mode, flight_class)
 
-# Climatiq Calculate Emissions Part
-API_URL = os.environ('CLIMATIQ_URL')
-API_KEY = os.environ('CLIMATIQ_API_KEY')
+    travel_data = res.json()
 
-headers = {
-        "Authorization": f"Bearer {API_KEY.strip()}",
-        "Content-type": "application/json"
-        }
-
-
-def get_travel_emissions():
-
-    data = {
-        "origin": {"query": origin},
-        "destination": {"query": destination},
-        "travel_mode": travel_mode
-    }
-
-    if travel_mode == 'air':
-        data['air_details'] = flight_class
-
-    response = requests.post(API_URL, json=data, headers=headers)
-    return response
-
-# if response['co2e'] >
+    if travel_data['co2e'] > 100:
+        alternative_button = st.button('Suggest Alternatives')
