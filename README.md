@@ -2,7 +2,7 @@
 
 <b>dashboard idea:</b><br>
 need to choose KPIs per department<br>
-create MVP for vizualization of the dashboard from streamlit - look at app.py for inspo <br><br>
+create MVP for vizualization of the dashboard from streamlit - G (to be revised) <br><br>
 <b>emissions calculator:</b><br>
 calculate past emissions per department<br>
 create function to calculate if emissions are on track or not based on current depart emissions (revolut idea - implementation design is your choice) - G<br>
