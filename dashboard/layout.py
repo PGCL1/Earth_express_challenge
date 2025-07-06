@@ -15,6 +15,7 @@ def create_column_line():
                       value=6666,
                       delta="+1%")
             st.line_chart(chart_data)
+            st.markdown("[Further information](https:://www.google.com)")
 
 
 # def create_KPI(KPI: object, col):
