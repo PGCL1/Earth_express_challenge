@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import numpy as np
 import pandas as pd
-from travel_calculation.travel_emissions import get_travel_emissions
+from travel_calculation.calculate_emissions import get_travel_emissions
 from travel_calculation.test import random_number
 
 
