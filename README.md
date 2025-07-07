@@ -1,7 +1,15 @@
 # Earth_express_challenge
 
 <b>dashboard idea:</b><br>
-need to choose KPIs per department<br>
+company global - Francisca <br>
+kpis
+per department<br>
+need to choose KPIs<br>
+for example, main destinations for said departments, select until you reach 50% total travels - Victor<br> 
+list these travels, with usually method of transport and spread between the methods (bar chart rail/plane/car with count)<br>
+average emissions for each type of travel from origin to destination<br>
+end goal is to provide valuable information and options to diminish emissions by X% by doing an action<br>
+
 create MVP for vizualization of the dashboard from streamlit - G (to be revised) <br><br>
 <b>emissions calculator:</b><br>
 calculate past emissions per department<br>
