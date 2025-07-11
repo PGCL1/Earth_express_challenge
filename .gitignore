@@ -1,3 +1,4 @@
 .env
 myenv
+.streamlit
 __pycache__

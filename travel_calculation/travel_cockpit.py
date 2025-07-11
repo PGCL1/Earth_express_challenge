@@ -2,18 +2,17 @@ import streamlit as st
 import requests
 import numpy as np
 import pandas as pd
+import time
+
 from travel_calculation.calculate_emissions import get_travel_emissions
 from travel_calculation.test import random_number
+from travel_calculation.layout import circular_image
 
+# header function of Travel Cockpit
+header = st.header('Travel Emission Cockpit')
 
-def hello():
-    print("wazaaaa")
-
-
-header = st.write('Travel Emission Cockpit')
-
+# starting form
 col1, col2 = st.columns(2)
-
 with col1:
     origin = st.text_input('Enter Departure')
 with col2:
@@ -30,25 +29,40 @@ if travel_mode == 'air':
             'How will you be flying?',
             ('economy', 'business', 'first')
     )
-    st.write(f"Customer will be flying in {flight_class}")
 
-st.write(f"Customer will be travelling from {origin} to {destination} by {travel_mode}")
-
-# calculate_trip_emissions = st.button("Calculate Emissions",
-#                                     on_click=get_travel_emissions,
-#                                     args=(origin, destination, travel_mode, flight_class))
-#    if travel_data['co2e'] > 100:
-#        alternative_button = st.button('Suggest Alternatives')
-
+# calculate travel emissions
 calculate_trip_emissions = st.button("Calculate Emissions")
+if calculate_trip_emissions and destination and origin:
+    res = get_travel_emissions(origin, destination, travel_mode, flight_class)
 
-if calculate_trip_emissions:
-    st.write("Customer wants to know what are the total emissions for their trip")
-    res = random_number() # get_travel_emissions(origin, destination, travel_mode, flight_class)
-    st.write(f"res is {res}")
+    with st.empty():
+        with st.spinner("Calculating emissions...", show_time=True):
+            time.sleep(2)
 
-    if res >= 500:
-        suggestions_alternative = st.button('Suggest Alternatives')
-        st.image('images/sad_face.jpg')
+    st.write("\n")
+    if res['co2e'] > 300:
+        col1, col2, col3 = st.columns(3, gap="small", vertical_alignment="center")
+        with col1:
+            st.write("Are you sure this is the only way? my poor rainforest\
+                    (give some text prez team)")
+        with col2:
+            circular_image('images/sad_sid.png')
+        with col3:
+            suggestions_alternative = st.button('Suggest Alternatives')
+            if suggestions_alternative:
+                other_travel_mode = [mode for mode in travel_mode if mode != travel_mode]
+                for mode in other_travel_mode:
+                    other_emissions = get_travel_emissions(origin, destination, mode)
+                    st.write(f"You could also travel by {mode}, it would cost\
+                            {other_emissions['co2e']} and save %")
     else:
-        st.image('images/happy_face.jpg')
+        col1, col2 = st.columns([1, 5])
+        with col1:
+            st.write(f"Thank you for thinking of me {st.user.given_name},\
+                    I hope you have a great trip to {destination} (give me some text prez team)")
+        with col2:
+            circular_image('images/happy_sid.png')
+
+    st.write(f"res is {res}")
+else:
+    st.write("Please input all fields in the form")

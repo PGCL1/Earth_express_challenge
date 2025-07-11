@@ -1,8 +1,8 @@
 # import pandas as pd
 
 def getMadridEmissions():
-    return 420
+    return 20
 
 
 def getVariation():
-    return 69.420
+    return 9.20
