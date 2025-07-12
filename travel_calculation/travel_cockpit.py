@@ -3,20 +3,55 @@ import requests
 import numpy as np
 import pandas as pd
 import time
+import googlemaps
+import os
 
+from streamlit_searchbox import st_searchbox
 from travel_calculation.calculate_emissions import get_travel_emissions
 from travel_calculation.test import random_number
 from travel_calculation.layout import circular_image
 
+
 # header function of Travel Cockpit
 header = st.header('Travel Emission Cockpit')
+
+# initializing googlemaps API
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
+
+
+def get_address_suggestions(query, api_key):
+    if not query:
+        return []
+    url = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+    params = {
+        "input": query,
+        "key": api_key,
+        "types": "geocode",
+        "language": "en"
+    }
+    response = requests.get(url, params=params)
+    predictions = response.json().get("predictions", [])
+    return [p["description"] for p in predictions]
+
+
+def get_place_suggestions(searchterm):
+    suggestions = get_address_suggestions(searchterm, GOOGLE_API_KEY)
+    return suggestions
+
+
+
+
+
 
 # starting form
 col1, col2 = st.columns(2)
 with col1:
-    origin = st.text_input('Enter Departure')
+    st.write("Enter Depature")
+    origin = st_searchbox(get_place_suggestions, key="origin", placeholder="enter departure")
 with col2:
-    destination = st.text_input('Enter Destination')
+    st.write("Enter Destination")
+    destination = st_searchbox(get_place_suggestions, key="destination", placeholder="enter destination")
 
 travel_mode = st.selectbox(
         'How are you planning to travel?',
